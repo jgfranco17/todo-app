@@ -4,6 +4,7 @@ MODELS.PY
 Contains the class architecture of the Point objects, as well as
 functions and variables related to database set-up and creation.
 """
+import datetime as dt
 from os import path
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean
 from sqlalchemy.orm import declarative_base
@@ -57,10 +58,11 @@ class Task(Base):
     completed = Column(Boolean(), nullable=False, default=False)
 
     def __repr__(self):
-        return f'<Point id={self.id} date={self.date}>'
+        return f'<Task id={self.id} date={self.date} completed={self.completed}>'
 
     def __eq__(self, other):
-        return self.id == other.id
+        return self.task == other.task
 
     def __len__(self):
-        return self.active
+        now = dt.datetime.now()
+        return abs(now - self.date)

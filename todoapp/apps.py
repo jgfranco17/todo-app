@@ -24,6 +24,14 @@ class TodoApp(object):
     def __repr__(self):
         return f'<TodoApp user={self._user})>'
 
+    def update(func):
+        def update_wrapper(self, *args, **kwargs):
+            loaded_data = self._db.query(Task).filter(Task.user == self._user)
+            self._task_count = len([d.task for d in loaded_data])
+            return func(*args, **kwargs)
+        return update_wrapper
+
+    @update
     def __load(self):
         if self._task_count:
             try:
@@ -67,7 +75,7 @@ class TodoApp(object):
         except Exception as e:
             lg.error(f'Error during task deletion: {e}')
 
-    def __get_nearest(self):
+    def __get_nearest(self) -> str:
         nearest_task = self._db.query(Task).filter(Task.user == self._user).first()
         return nearest_task.task
 
