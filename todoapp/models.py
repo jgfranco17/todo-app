@@ -43,11 +43,11 @@ class Task(Base):
     Class representation of each data point.
 
     Parameters:
-        id (int): Primary key, identifies individual points
-        date (DateTime): Date of recorded point
-        active (int): Number of active cases in country
-        confirmed (int): Number of confirmed cases (total)
-        deaths (int): Number of deaths from COVID-19
+        id (int): Primary key, identifies individual entries
+        date (DateTime): Date task was added
+        user (str): Name of user
+        task (str): task description
+        completed (bool): True if task was completed, else False
     """
     __tablename__ = "tasklist"
 
